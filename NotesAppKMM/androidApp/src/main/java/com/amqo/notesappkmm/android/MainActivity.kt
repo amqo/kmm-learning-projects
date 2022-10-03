@@ -16,6 +16,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.amqo.notesappkmm.android.note_list.NoteListScreen
+import dagger.hilt.android.AndroidEntryPoint
 
 @Composable
 fun MyApplicationTheme(
@@ -56,6 +59,7 @@ fun MyApplicationTheme(
     )
 }
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,22 +69,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Greeting(Greeting().greeting())
+                    NoteListScreen()
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(text: String) {
-    Text(text = text)
-}
-
-@Preview
-@Composable
-fun DefaultPreview() {
-    MyApplicationTheme {
-        Greeting("Hello, Android!")
     }
 }
