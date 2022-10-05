@@ -13,11 +13,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.amqo.notesappkmm.android.note_list.NoteListScreen
+import androidx.navigation.NavHostController
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.amqo.notesappkmm.android.note_detail.composables.NoteDetailScreen
+import com.amqo.notesappkmm.android.note_list.composables.NoteListScreen
+import com.amqo.notesappkmm.domain.note.Note
 import dagger.hilt.android.AndroidEntryPoint
 
 @Composable
@@ -69,7 +75,29 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    NoteListScreen()
+                    val navController = rememberNavController()
+                    NavHost(navController = navController, startDestination = "note_list") {
+                        composable(route = "note_list") {
+                            NoteListScreen(
+                                navController = navController
+                            )
+                        }
+                        composable(
+                            route = "note_detail/{noteId}",
+                            arguments = listOf(
+                                navArgument(name = "noteId") {
+                                    type = NavType.LongType
+                                    defaultValue = Note.pendingId
+                                }
+                            )
+                        ) { backstackEntry ->
+                            val noteId = backstackEntry.arguments?.getLong("noteId") ?: Note.pendingId
+                            NoteDetailScreen(
+                                noteId = noteId,
+                                navController = navController
+                            )
+                        }
+                    }
                 }
             }
         }

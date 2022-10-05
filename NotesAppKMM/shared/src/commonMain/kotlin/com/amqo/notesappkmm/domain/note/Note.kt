@@ -11,6 +11,8 @@ data class Note(
     val created: LocalDateTime
 ) {
     companion object {
+        const val pendingId = -1L
+
         private val colors = listOf(
             RedOrangeHex, RedPinkHex, LightGreenHex, BabyBlueHex, VioletHex
         )

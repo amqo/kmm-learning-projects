@@ -1,4 +1,4 @@
-package com.amqo.notesappkmm.android.note_list
+package com.amqo.notesappkmm.android.note_list.composables
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
